@@ -3,6 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 export const Content = () => {
 
+
   const [items, setitems] = useState([
     {
       id:1,
@@ -33,10 +34,12 @@ export const Content = () => {
     setitems(listItems)
     localStorage.setItem('shopping',JSON.stringify(listItems))
   }
+ 
 
 
   return (
     <main>
+      {items.length?(
       <ul>
         {items.map((item)=> (
           <li className="item" key={item.id}>
@@ -48,6 +51,9 @@ export const Content = () => {
           </li>
         ))}
       </ul>
+      ):(
+       <p style={{marginTop:'2rem'}}>Your list is empty</p> 
+      )}
     </main>
   );
 };
