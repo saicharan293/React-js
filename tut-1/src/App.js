@@ -4,25 +4,35 @@ import { Content } from './Content';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { AddItem } from './AddItem';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchItem } from './SearchItem';
 function App() {
   // const name='Sai';
   
-  const [items, setitems] = useState(JSON.parse(localStorage.getItem('shopping')))
+  const [items, setitems] = useState(JSON.parse(localStorage.getItem('shopping')) || [])
   const [newItem, setnewItem] = useState('')
   const [search, setsearch] = useState('')
 
-  const setAndSave=(newItems)=>{
-    setitems(newItems);
-    localStorage.setItem('shopping',JSON.stringify(newItems));
-  }
+  //use effect 
+  //-> called after every load , if there is no dependancy
+  
+  // useEffect(()=>{
+  //   console.log("updating items state")
+  // })
+
+  //-> called when there is change in value, if there is dependancy
+  // console.log("before use effect")
+  useEffect(()=>{
+    // console.log("inside use effect items state")
+    localStorage.setItem('shopping',JSON.stringify(items));
+  },[items])
+  // console.log('after use effect')
 
   const addItem=(item)=>{
     const id=items.length?items[items.length - 1].id + 1: 1;
     const myNewItem={id,checked:false,item};
     const listItems=[...items,myNewItem];
-    setAndSave(listItems)
+    setitems(listItems)
 
   }
 
@@ -37,13 +47,13 @@ function App() {
 
   const handleCheck =(id)=>{
     const listItems=items.map(item=>item.id===id?{...item,checked:!item.checked}:item);
-   setAndSave(listItems)
+   setitems(listItems)
   }
 
   const handleDelete=(id)=>{
     // console.log(id)
     const listItems=items.filter(item=>item.id!==id);
-    setAndSave(listItems)
+    setitems(listItems)
   }
  
   
