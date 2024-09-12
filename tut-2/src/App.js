@@ -11,6 +11,7 @@ import { Route,Routes, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Home from './Home';
 import { format } from 'date-fns/format';
+import api from './api/posts';
 
 function App() {
   const [search, setsearch] = useState('')
@@ -18,15 +19,24 @@ function App() {
   const navigate=useNavigate();
   const [postTitle, setpostTitle] = useState('')
   const [postBody, setpostBody] = useState('')
-
-  
   const [posts, setposts] = useState([]);
   const handleDelete=(id)=>{
     const postsList=posts.filter(post=>post.id!==id)
     setposts(postsList);
     navigate('/');
-
   }
+
+  useEffect(()=>{
+    const fetchPosts=async()=>{
+      try {
+        const response=await api.get('/posts');
+        setposts
+      } catch (error) {
+        
+      }
+    }
+  },[])
+
   useEffect(()=>{
     const filteredPosts=posts.filter(post=>
       ((post.body).toLowerCase()).includes(search.toLowerCase())
