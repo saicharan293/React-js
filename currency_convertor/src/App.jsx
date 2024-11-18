@@ -25,7 +25,7 @@ const App = () => {
   return (
     <div 
       className='w-full h-screen flex flex-wrap justify-center items-center bg-cover bg-no-repeat'
-      style={{backgroundImage:`url(https://images.pexels.com/photos/210574/pexels-photo-210574.jpeg?auto=compress&cs=tinysrgb&w=600)`}}
+      style={{backgroundImage:`url(https://images.unsplash.com/photo-1518544801976-3e159e50e5bb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTAzfHxjdXJyZW5jeSUyMGV4Y2hhbmdlfGVufDB8fDB8fHww)`}}
       >
         <div className="w-full">
           <div className="w-full max-w-md mx-auto border border-gray-600 rounded-lg p-5 backdrop-blur-sm bg-white/30">
