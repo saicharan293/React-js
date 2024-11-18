@@ -4,8 +4,8 @@ import {InputBox} from './components/index.js'
 
 const App = () => {
   const [amount, setAmount] = useState(0)
-  const [from, setFrom] = useState('inr')
-  const [to, setTo] = useState('usd')
+  const [from, setFrom] = useState('usd')
+  const [to, setTo] = useState('inr')
   const [convertedAmount, setConvertedAmount] = useState(0)
 
   const currencyInfo=useCurrencyInfo(from)
@@ -36,7 +36,7 @@ const App = () => {
               <div className="w-full mb-1">
                 <InputBox 
                   label="from"
-                  amount={amount}
+                  amount={amount.toFixed(2)}
                   currencyOptions={options}
                   onDropdownChange={(currency)=>{setFrom(currency)}}
                   onAmountChange={(amt)=>setAmount(amt)}
@@ -51,7 +51,7 @@ const App = () => {
               <div className="w-full mb-1">
                 <InputBox 
                   label="to"
-                  amount={convertedAmount}
+                  amount={convertedAmount.toFixed(2)}
                   amountDisabled
                   currencyOptions={options}
                   onDropdownChange={(currency)=>{setTo(currency)}}
