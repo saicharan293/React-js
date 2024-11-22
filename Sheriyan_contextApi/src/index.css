@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background-color: #111;
+  color: #fff;
+}
+h1{
+  text-decoration: underline;
+  font-size: 70px;
+  font-weight: 600;
+}
