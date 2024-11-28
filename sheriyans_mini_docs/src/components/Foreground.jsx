@@ -21,7 +21,7 @@ const Foreground = () => {
             onClick={()=>{
                 setIsOpen(true) 
             }}><IoMdAdd /></div>
-            <div ref={ref} className="w-full h-full left-0 top-0 fixed z-[3] gap-10  lg:flex lg:flex-col overflow-y-auto  p-5">
+            <div ref={ref} className="w-full h-full left-0 top-0 fixed z-[3] flex gap-10 flex-wrap lg:flex-col overflow-auto  p-5">
                 {/* <Card /> */}
                 {docsList.map((item, idx) => (
                     <Card key={idx} id={idx} data={item} reference={ref} updateDoc={updateDoc}/>
