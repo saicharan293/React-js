@@ -1,8 +1,7 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { ImCross } from 'react-icons/im'
-import { DataContext } from '../context/ContextApi'
 
-const ModalForm = ({isOpen, setIsOpen}) => {
+const ModalForm = ({isOpen, setIsOpen,currentDoc,addDoc, updateDoc}) => {
     const formRef=useRef()
     const [formData, setFormData] = useState({
         description:'',
@@ -14,7 +13,6 @@ const ModalForm = ({isOpen, setIsOpen}) => {
             tagColor:'green'
         }
     })
-    const {addDoc} = useContext(DataContext)
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         
@@ -36,20 +34,29 @@ const ModalForm = ({isOpen, setIsOpen}) => {
       };
     const handleSubmit=(e)=>{
         e.preventDefault();
-        addDoc(formData)
-        setIsOpen(false)
+        if (currentDoc) {
+          updateDoc(formData)
+        } else {
+          addDoc(formData)
+        }
+        setIsOpen(false) 
         setFormData({
-            description: "",
-            filesize: "",
-            close: true,
-            tag: {
-              isOpen: false,
-              tagTitle: "",
-              tagColor: "green",
-            },
-        });
-
+          description: '',
+          filesize: '',
+          close: true,
+          tag: {
+            isOpen: false,
+            tagTitle: '',
+            tagColor: 'green',
+          },
+        })
     }
+
+    useEffect(() => {
+      if (isOpen && currentDoc) {
+        setFormData(currentDoc)
+      }
+    }, [isOpen, currentDoc])
   return (
     <div className='p-4'>
       {isOpen && (
@@ -65,7 +72,7 @@ const ModalForm = ({isOpen, setIsOpen}) => {
 
             {/* Form */}
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-              <h2 className="text-xl font-semibold mb-4">Add New Entry</h2>
+              <h2 className="text-xl font-semibold mb-4">{currentDoc ? 'Edit Document' : 'Add New Document'}</h2>
 
               {/* Description Input */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -157,7 +164,7 @@ const ModalForm = ({isOpen, setIsOpen}) => {
                 type="submit"
                 className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition"
               >
-                Add Entry
+                {currentDoc ? 'Update Entry' : 'Add Entry'}
               </button>
             </form>
           </div>

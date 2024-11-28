@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaDownload, FaEdit } from 'react-icons/fa'
 import { IoClose } from 'react-icons/io5'
 import { LuDownload } from 'react-icons/lu'
 import { motion } from "framer-motion";
+import ModalForm from './ModalForm';
 
-const Card = ({data,reference}) => {
-  // console.log(data.tag.tagColor)
+const Card = ({data,reference,updateDoc}) => {
+  const [isOpen, setIsOpen] = useState(false)
+  // console.log(updateDoc)
+  // console.log(data)
+
   const handleSaveToFile = () => {
     const content = data.description; 
     const blob = new Blob([content], { type: "text/plain" });
@@ -13,8 +17,11 @@ const Card = ({data,reference}) => {
     link.href = URL.createObjectURL(blob);
     link.download = "description.txt"; 
     link.click();
+    URL.revokeObjectURL(link.href);
   };
+
   return (
+    <>
     <motion.div 
       drag 
       dragConstraints={reference} 
@@ -22,8 +29,8 @@ const Card = ({data,reference}) => {
       dragElastic={.5} 
       dragTransition={{bounceStiffness: 100, bounceDamping: 30}}
       className="flex-shrink-0 relative lg:w-60 lg:h-72 w-44 h-56 lg:rounded-[45px] rounded-[30px] bg-zinc-900/90 text-white lg:px-8 lg:py-10 px-4 py-6 overflow-hidden  ">
-        <FaEdit />
-        <p className='text-sm font-normal leading-tight mt-5 lg:font-semibold'>{data.description}</p>
+        <FaEdit className='cursor-pointer' onClick={()=>setIsOpen(true)}/>
+        <p className='lg:text-[18px] text-sm font-normal leading-tight mt-5 lg:font-semibold'>{data.description}</p>
         <div className="footer absolute bottom-0 w-full left-0 ">
             <div className='flex items-center justify-between py-3 lg:px-8 px-6 mb-3'>
                 <h5 className='text-sm lg:text-xl'>{data.filesize} </h5>
@@ -33,12 +40,14 @@ const Card = ({data,reference}) => {
             </div>
             {
               data.tag.isOpen && 
-            (<div className={`tag w-full py-4 sm:py-3 ${data.tag.tagColor=='sky'?"bg-sky-600":"bg-green-600"} flex items-center justify-center`}>
+            (<div className={`tag w-full py-4 sm:py-3 ${data.tag.tagColor=='blue'?"bg-sky-600":"bg-green-600"} flex items-center justify-center`}>
                 <h3 className=' cursor-pointer lg:text-sm text-xs font-normal lg:font-semibold flex justify-center items-center gap-2' onClick={handleSaveToFile}>{data.tag.tagTitle} <FaDownload/></h3>
             </div>)
             }
         </div>
     </motion.div>
+    <ModalForm isOpen={isOpen} setIsOpen={setIsOpen} currentDoc={data} updateDoc={updateDoc}/>
+    </>
   )
 }
 
